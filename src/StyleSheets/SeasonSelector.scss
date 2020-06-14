@@ -1,0 +1,12 @@
+.SeasonSelector {
+    text-align: center;
+
+    .SeasonSelector-Header {
+        margin-bottom: 2vmin;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: calc(2vmin + 5px);
+    }
+}
