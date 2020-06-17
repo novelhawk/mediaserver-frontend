@@ -10,12 +10,12 @@ const useStyles = makeStyles({
         left: 0,
         right: 0,
         width: 'auto',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     link: {
         textDecoration: 'none',
-        cursor: 'pointer'
-    }
+        cursor: 'pointer',
+    },
 });
 
 export default function Home() {
@@ -23,11 +23,9 @@ export default function Home() {
 
     return (
         <div className={classes.root}>
-            <Typography variant="h3">
-                Welcome to media server
-            </Typography>
+            <Typography variant="h3">Welcome to media server</Typography>
 
-            <Link href='/anime'>
+            <Link href="/anime">
                 <Typography variant="h5" className={classes.link}>
                     Press here to list the available animes
                 </Typography>
