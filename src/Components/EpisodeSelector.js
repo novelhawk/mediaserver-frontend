@@ -1,15 +1,11 @@
 import React from 'react';
-import Loading from './Loading';
+import { Tooltip } from '@material-ui/core'
 import { Fetch } from 'react-request';
 import { withRouter, Link, Redirect } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
-import '../StyleSheets/EpisodeSelector.scss'
+import { getEpisodeUrl, getAnimeListAPI } from '../Common';
+import Loading from './Loading';
 
 class EpisodeSelector extends React.Component {
-    getEpisodeUrl(episodeId) {
-        return `/anime/${this.state.anime}/${this.state.season}/${episodeId}`;
-    }
-
     componentDidMount() {
         let params = this.props.match.params;
         this.setState({
@@ -44,7 +40,7 @@ class EpisodeSelector extends React.Component {
                         }
 
                         if (seasonInfo.episodesCount === 1 && seasonInfo.availableEpisodes === 1) {
-                            return <Redirect to={this.getEpisodeUrl(seasonInfo.episodes[0].id)} />
+                            return <Redirect to={getEpisodeUrl(seasonInfo.episodes[0].id)} />
                         }
 
                         return (
@@ -58,7 +54,7 @@ class EpisodeSelector extends React.Component {
                                         if (episode.available === undefined || episode.available === true) {
                                             return (
                                                 <div className="EpisodeSelector-EpisodePanel">
-                                                    <Link key={episode.id} to={this.getEpisodeUrl(episode.id)}>
+                                                    <Link key={episode.id} to={getEpisodeUrl(episode.id)}>
                                                         {episode.displayName}
                                                     </Link>
                                                 </div>
@@ -67,9 +63,11 @@ class EpisodeSelector extends React.Component {
 
                                         return (
                                             <div className="EpisodeSelector-EpisodePanel">
-                                                <a data-for="not-available" data-tip='' className="EpisodeSelector-NotAvailable">
-                                                    {episode.displayName}
-                                                </a>
+                                                <Tooltip title="Not available" placement="right">
+                                                    <a className="EpisodeSelector-NotAvailable">
+                                                        {episode.displayName}
+                                                    </a>
+                                                </Tooltip>
                                             </div>
                                         );
                                     })}
@@ -84,5 +82,5 @@ class EpisodeSelector extends React.Component {
         );
     }
 }
- 
+
 export default withRouter(EpisodeSelector);

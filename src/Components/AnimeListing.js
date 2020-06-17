@@ -1,48 +1,97 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Loading from './Loading';
-import { Fetch } from 'react-request';
 import { Link } from 'react-router-dom';
-import '../StyleSheets/AnimeListing.scss';
+import { getAnimeUrl, getAnimeListAPI } from '../Common';
+
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/Cardcontent';
+import CardMedia from '@material-ui/core/CardMedia'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
+import { withStyles } from '@material-ui/core/styles';
+
+let styles = {
+    grid: {
+        width: '90%',
+        margin: 'auto'
+    },
+    title: {
+        marginTop: '5px',
+        textAlign: 'center'
+    },
+    card: {
+        minWidth: '220px',
+        maxWidth: '300px'
+    },
+    image: {
+        paddingTop: '131%'
+    }
+};
 
 class AnimeListing extends React.Component {
-    getAnimeUrl(animeId) {
-        return `/anime/${animeId}`;
-    }
+    componentDidMount() {
+        let api = getAnimeListAPI('animeGeneric');
 
+        fetch(api)
+            .then(res => res.json())
+            .then(data => this.setState(data))
+            .catch(error => {
+                // Request error or malformed json
+                this.setState({
+                    fetchError: error
+                })
+            })
+    }
+    
     render() {
-        let api = 'http://192.168.1.111/api/v1/anime/list?part=animeGeneric';
+        if (!this.state) {
+            return <Loading />;
+        }
+
+        let { successful, data, error, fetchError } = this.state;
+        let { classes } = this.props;
+
+        if (fetchError) {
+            return <h1>Failed to connect to remote endpoint</h1>;
+        }
+
+        if (!successful) {
+            return <Typography variant="h4">{error}</Typography>;
+        }
 
         return (
-            <Fetch method="GET" url={api}>
-                {({ fetching, failed, data }) => {
-                    if (fetching) {
-                        return <Loading />
-                    }
-
-                    if (failed) {
-                        return <h1>{data?.error ?? "Failed to connect to remote API"}</h1>
-                    }
-
-                    if (data) {
+            <div className="AnimeListing">
+                <Typography variant="h3" className={classes.title} gutterBottom>
+                    Available animes
+                </Typography>
+                <Grid container direction="row" justify="center" spacing={2} className={classes.grid}>
+                    {data.animes.map((anime, index) => {
                         return (
-                            <div className="AnimeListing">
-                                <h1 className="AnimeListing-Header">Listing animes</h1>
-                                {data.animes.map(anime => {
-                                    return (
-                                        <div className="AnimeListing-AnimePanel">
-                                            <Link to={this.getAnimeUrl(anime.id)}>{anime.displayName}</Link>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                            <Grid key={index} item>
+                                <Card className={classes.card}>
+                                    <CardActionArea component={Link} to={getAnimeUrl(anime.id)}>
+                                        {anime.cover && <CardMedia image={anime.cover} className={classes.image} />}
+                                        <CardContent>
+                                            <Typography variant="h5">
+                                                {anime.displayName}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
                         );
-                    }
-
-                    return null;
-                }}
-            </Fetch>
+                    })}
+                </Grid>
+            </div>
         );
     }
 }
+
+AnimeListing.propTypes = {
+    classes: PropTypes.object.isRequired
+};
  
-export default AnimeListing;
+export default withStyles(styles)(AnimeListing);
