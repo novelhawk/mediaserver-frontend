@@ -24,6 +24,6 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "src/Theme.js", "pages/_document.js", "pages/index.js", "pages/anime/index.js"
+    "**/*.tsx"
   ]
 }

@@ -18,6 +18,15 @@ const theme = createMuiTheme({
             default: '#232323',
         },
     },
+    typography: {
+        fontSize: 8,
+        body1: {
+            fontSize: '1.3rem',
+        },
+        body2: {
+            fontSize: '1rem',
+        },
+    },
 });
 
 export default theme;
