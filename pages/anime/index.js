@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import fetch from 'isomorphic-unfetch';
 import Link from 'next/link';
+import { getAnimesAPI } from '../../src/Routes';
 
 const useStyles = makeStyles({
     grid: {
@@ -37,7 +38,7 @@ export default function AnimeList({ errorCode, animes }) {
 
     return (
         <div className="AnimeListing">
-            <Typography variant="h3" className={classes.title} gutterBottom>
+            <Typography variant="h1" className={classes.title} gutterBottom>
                 Available animes
             </Typography>
             <Grid container direction="row" justify="center" spacing={2} className={classes.grid}>
@@ -47,7 +48,9 @@ export default function AnimeList({ errorCode, animes }) {
                             <Card className={classes.card}>
                                 <Link href={`/anime/${anime.shortName}`}>
                                     <CardActionArea>
-                                        {anime.cover && <CardMedia image={anime.cover} className={classes.image} />}
+                                        {anime.coverResourceUrl && (
+                                            <CardMedia image={anime.coverResourceUrl} className={classes.image} />
+                                        )}
                                         <CardContent>
                                             <Typography variant="h5">{anime.displayName}</Typography>
                                         </CardContent>
@@ -64,10 +67,11 @@ export default function AnimeList({ errorCode, animes }) {
 
 export async function getServerSideProps() {
     try {
-        const api = 'http://localhost:8000/anime';
-        const res = await fetch(api);
+        const res = await fetch(getAnimesAPI());
+        if (!res.ok) {
+            return { props: { errorCode: res.status } };
+        }
         const json = await res.json();
-
         return { props: { animes: json } };
     } catch (error) {
         return { props: { errorCode: 500 } };
