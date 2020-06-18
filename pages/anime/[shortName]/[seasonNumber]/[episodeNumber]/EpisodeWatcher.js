@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { getEpisodeAPI } from '../../../../src/Routes';
+import { getEpisodeAPI } from '../../../../../src/Routes';
 import fetch from 'isomorphic-unfetch';
 
 const useStyles = makeStyles({
