@@ -4,7 +4,7 @@ import Error from 'next/error';
 import Router from 'next/router';
 
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/Cardcontent';
+import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
