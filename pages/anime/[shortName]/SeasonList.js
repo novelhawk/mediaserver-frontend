@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import Link from 'next/link';
-import Error from 'next/error';
-import Router from 'next/router';
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-
-import { getSeasonRoute, getAnimeAPI } from '../../../src/Routes';
+import {
+    Card,
+    CardActionArea,
+    CardContent,
+    CardMedia,
+    Grid,
+    makeStyles,
+    Typography
+} from '@material-ui/core';
 import fetch from 'isomorphic-unfetch';
+import Error from 'next/error';
+import Link from 'next/link';
+import Router from 'next/router';
+import React, { useEffect } from 'react';
+import { getAnimeAPI, getSeasonRoute } from '../../../src/Routes';
 
 const useStyles = makeStyles({
     header: {
@@ -53,7 +53,7 @@ export default function SeasonList({ errorCode, anime }) {
         // Render the season selector if there are multiple seasons available
         seasons = anime.seasons.map((season) => {
             return (
-                <Grid key={season.id} item>
+                <Grid key={season.number} item>
                     <Card className={classes.card}>
                         <Link href={getSeasonRoute(anime.shortName, season.number)}>
                             <CardActionArea>
@@ -75,7 +75,7 @@ export default function SeasonList({ errorCode, anime }) {
         <div className="SeasonSelector">
             <div className={classes.header}>
                 <Typography variant="h1">{anime.displayName}</Typography>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h2" gutterBottom>
                     Select the season you want to watch
                 </Typography>
             </div>

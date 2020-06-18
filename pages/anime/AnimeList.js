@@ -1,17 +1,17 @@
-import React from 'react';
-import Link from 'next/link';
-import Error from 'next/error';
-
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-
-import { getAnimesAPI } from '../../src/Routes';
+import {
+    Card,
+    CardActionArea,
+    CardContent,
+    CardMedia,
+    Grid,
+    makeStyles,
+    Typography
+} from '@material-ui/core/';
 import fetch from 'isomorphic-unfetch';
+import Error from 'next/error';
+import Link from 'next/link';
+import React from 'react';
+import { getAnimesAPI } from '../../src/Routes';
 
 const useStyles = makeStyles({
     grid: {

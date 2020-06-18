@@ -1,12 +1,11 @@
-import React from 'react';
-import Error from 'next/error';
-import ReactPlayer from 'react-player';
-
-import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-
-import { getEpisodeAPI } from '../../../../../src/Routes';
+import { makeStyles, Typography } from '@material-ui/core';
 import fetch from 'isomorphic-unfetch';
+import Error from 'next/error';
+import React from 'react';
+import ReactPlayer from 'react-player';
+import { getEpisodeAPI } from '../../../../../src/Routes';
+
+
 
 const useStyles = makeStyles({
     header: {
@@ -29,7 +28,7 @@ export default function EpisodeWatcher({ errorCode, anime, episode }) {
         <div className="Episode">
             <div className={classes.header}>
                 <Typography variant="h1">{anime.displayName}</Typography>
-                <Typography variant="h3">{episode.displayName}</Typography>
+                <Typography variant="h2">{episode.displayName}</Typography>
             </div>
             <ReactPlayer
                 className={classes.player}

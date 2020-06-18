@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Typography from '@material-ui/core/Typography';
+import Link from 'next/link';
+import React from 'react';
 
 const useStyles = makeStyles({
     root: {
@@ -26,7 +26,7 @@ export default function Home() {
             <Typography variant="h1">Welcome to media server</Typography>
 
             <Link href="/anime">
-                <Typography variant="h3" className={classes.link}>
+                <Typography variant="h2" className={classes.link}>
                     Press here to list the available animes
                 </Typography>
             </Link>

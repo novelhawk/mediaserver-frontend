@@ -1,14 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
-import Error from 'next/error';
-
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import Zoom from '@material-ui/core/Zoom';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-
-import { getEpisodeRoute, getSeasonAPI } from '../../../../src/Routes';
+import { makeStyles, Tooltip, Typography, Zoom } from '@material-ui/core';
 import fetch from 'isomorphic-unfetch';
+import Error from 'next/error';
+import Link from 'next/link';
+import React from 'react';
+import { getEpisodeRoute, getSeasonAPI } from '../../../../src/Routes';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -20,11 +15,18 @@ const useStyles = makeStyles((theme) => ({
         width: '40%',
         margin: 'auto',
     },
+    tooltip: {
+        fontSize: '1.3rem',
+        backgroundColor: theme.palette.error.main,
+        color: theme.palette.error.contrastText
+    },
     link: {
         cursor: 'pointer',
+        fontSize: '1.5rem',
     },
     unavailable: {
         color: theme.palette.grey.A700,
+        fontSize: '1.5rem',
         display: 'inline-block',
     },
 }));
@@ -40,7 +42,7 @@ export default function EpisodeList({ errorCode, anime, season }) {
         <div className="EpisodeSelector">
             <div className={classes.header}>
                 <Typography variant="h1">{season.displayName}</Typography>
-                <Typography variant="h3">Select the episode you want to watch</Typography>
+                <Typography variant="h2">Select the episode you want to watch</Typography>
             </div>
             <div className={classes.root}>
                 {season.episodes.map((episode) => {
@@ -54,6 +56,7 @@ export default function EpisodeList({ errorCode, anime, season }) {
                                 </Link>
                             ) : (
                                 <Tooltip
+                                    classes={classes}
                                     title="Not available"
                                     placement="right"
                                     TransitionComponent={Zoom}
