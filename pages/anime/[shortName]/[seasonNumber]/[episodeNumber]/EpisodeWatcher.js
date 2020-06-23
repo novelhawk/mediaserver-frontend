@@ -1,10 +1,10 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import fetch from 'isomorphic-unfetch';
+import { NextSeo } from 'next-seo';
 import Error from 'next/error';
 import React from 'react';
 import ReactPlayer from 'react-player';
 import { getEpisodeAPI } from '../../../../../src/Routes';
-
 
 
 const useStyles = makeStyles({
@@ -25,20 +25,23 @@ export default function EpisodeWatcher({ errorCode, anime, episode }) {
     }
 
     return (
-        <div className="Episode">
-            <div className={classes.header}>
-                <Typography variant="h1">{anime.displayName}</Typography>
-                <Typography variant="h2">{episode.displayName}</Typography>
+        <>
+            <NextSeo title={`Episode ${episode.number} - ${anime.displayName} - Mediaserver`}/>
+            <div className="Episode">
+                <div className={classes.header}>
+                    <Typography variant="h1">{anime.displayName}</Typography>
+                    <Typography variant="h2">{episode.displayName}</Typography>
+                </div>
+                <ReactPlayer
+                    className={classes.player}
+                    url={episode.resourceUrl}
+                    controls={true}
+                    muted={false}
+                    width="auto"
+                    height="auto"
+                />
             </div>
-            <ReactPlayer
-                className={classes.player}
-                url={episode.resourceUrl}
-                controls={true}
-                muted={false}
-                width="auto"
-                height="auto"
-            />
-        </div>
+        </>
     );
 }
 

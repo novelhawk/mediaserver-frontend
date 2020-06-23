@@ -8,6 +8,7 @@ import {
     Typography
 } from '@material-ui/core';
 import fetch from 'isomorphic-unfetch';
+import { NextSeo } from 'next-seo';
 import Error from 'next/error';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -72,17 +73,20 @@ export default function SeasonList({ errorCode, anime }) {
     }
 
     return (
-        <div className="SeasonSelector">
-            <div className={classes.header}>
-                <Typography variant="h1">{anime.displayName}</Typography>
-                <Typography variant="h2" gutterBottom>
-                    Select the season you want to watch
-                </Typography>
+        <>
+            <NextSeo title={`${anime.displayName} - Mediaserver`}/>
+            <div className="SeasonSelector">
+                <div className={classes.header}>
+                    <Typography variant="h1">{anime.displayName}</Typography>
+                    <Typography variant="h2" gutterBottom>
+                        Select the season you want to watch
+                    </Typography>
+                </div>
+                <Grid container direction="row" justify="center" spacing={2} className={classes.grid}>
+                    {seasons}
+                </Grid>
             </div>
-            <Grid container direction="row" justify="center" spacing={2} className={classes.grid}>
-                {seasons}
-            </Grid>
-        </div>
+        </>
     );
 }
 

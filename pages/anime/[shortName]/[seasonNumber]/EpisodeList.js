@@ -1,5 +1,6 @@
 import { makeStyles, Tooltip, Typography, Zoom } from '@material-ui/core';
 import fetch from 'isomorphic-unfetch';
+import { NextSeo } from 'next-seo';
 import Error from 'next/error';
 import Link from 'next/link';
 import React from 'react';
@@ -39,40 +40,43 @@ export default function EpisodeList({ errorCode, anime, season }) {
     }
 
     return (
-        <div className="EpisodeSelector">
-            <div className={classes.header}>
-                <Typography variant="h1">{season.displayName}</Typography>
-                <Typography variant="h2">Select the episode you want to watch</Typography>
+        <>
+            <NextSeo title={`${season.englishName} Episodes - Mediaserver`}/>
+            <div className="EpisodeSelector">
+                <div className={classes.header}>
+                    <Typography variant="h1">{season.displayName}</Typography>
+                    <Typography variant="h2">Select the episode you want to watch</Typography>
+                </div>
+                <div className={classes.root}>
+                    {season.episodes.map((episode) => {
+                        return (
+                            <div key={episode.number}>
+                                {episode.available !== false ? (
+                                    <Link href={getEpisodeRoute(anime.shortName, season.number, episode.number)}>
+                                        <Typography variant="body1" className={classes.link}>
+                                            {episode.displayName}
+                                        </Typography>
+                                    </Link>
+                                ) : (
+                                    <Tooltip
+                                        classes={classes}
+                                        title="Not available"
+                                        placement="right"
+                                        TransitionComponent={Zoom}
+                                        enterDelay={50}
+                                        leaveDelay={100}
+                                    >
+                                        <Typography variant="body1" className={classes.unavailable}>
+                                            {episode.displayName}
+                                        </Typography>
+                                    </Tooltip>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
-            <div className={classes.root}>
-                {season.episodes.map((episode) => {
-                    return (
-                        <div key={episode.number}>
-                            {episode.available !== false ? (
-                                <Link href={getEpisodeRoute(anime.shortName, season.number, episode.number)}>
-                                    <Typography variant="body1" className={classes.link}>
-                                        {episode.displayName}
-                                    </Typography>
-                                </Link>
-                            ) : (
-                                <Tooltip
-                                    classes={classes}
-                                    title="Not available"
-                                    placement="right"
-                                    TransitionComponent={Zoom}
-                                    enterDelay={50}
-                                    leaveDelay={100}
-                                >
-                                    <Typography variant="body1" className={classes.unavailable}>
-                                        {episode.displayName}
-                                    </Typography>
-                                </Tooltip>
-                            )}
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
+        </>
     );
 }
 

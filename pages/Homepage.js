@@ -1,5 +1,6 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
 
@@ -22,14 +23,17 @@ export default function Home() {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            <Typography variant="h1">Welcome to media server</Typography>
+        <>
+            <NextSeo title="Homepage - Mediaserver"/>
+            <div className={classes.root}>
+                <Typography variant="h1">Welcome to media server</Typography>
 
-            <Link href="/anime">
-                <Typography variant="h2" className={classes.link}>
-                    Press here to list the available animes
-                </Typography>
-            </Link>
-        </div>
+                <Link href="/anime">
+                    <Typography variant="h2" className={classes.link}>
+                        Press here to list the available animes
+                    </Typography>
+                </Link>
+            </div>
+        </>
     );
 }

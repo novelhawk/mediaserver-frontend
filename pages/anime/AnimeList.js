@@ -8,6 +8,7 @@ import {
     Typography
 } from '@material-ui/core/';
 import fetch from 'isomorphic-unfetch';
+import { NextSeo } from 'next-seo';
 import Error from 'next/error';
 import Link from 'next/link';
 import React from 'react';
@@ -39,31 +40,34 @@ export default function AnimeList({ errorCode, animes }) {
     }
 
     return (
-        <div className="AnimeListing">
-            <Typography variant="h1" className={classes.title} gutterBottom>
-                Available animes
-            </Typography>
-            <Grid container direction="row" justify="center" spacing={2} className={classes.grid}>
-                {animes.map((anime) => {
-                    return (
-                        <Grid key={anime.id} item>
-                            <Card className={classes.card}>
-                                <Link href={`/anime/${anime.shortName}`}>
-                                    <CardActionArea>
-                                        {anime.coverResourceUrl && (
-                                            <CardMedia image={anime.coverResourceUrl} className={classes.image} />
-                                        )}
-                                        <CardContent>
-                                            <Typography variant="h5">{anime.displayName}</Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                </Link>
-                            </Card>
-                        </Grid>
-                    );
-                })}
-            </Grid>
-        </div>
+        <>
+            <NextSeo title="Available Animes - Mediaserver"/>
+            <div className="AnimeListing">
+                <Typography variant="h1" className={classes.title} gutterBottom>
+                    Available animes
+                </Typography>
+                <Grid container direction="row" justify="center" spacing={2} className={classes.grid}>
+                    {animes.map((anime) => {
+                        return (
+                            <Grid key={anime.id} item>
+                                <Card className={classes.card}>
+                                    <Link href={`/anime/${anime.shortName}`}>
+                                        <CardActionArea>
+                                            {anime.coverResourceUrl && (
+                                                <CardMedia image={anime.coverResourceUrl} className={classes.image} />
+                                            )}
+                                            <CardContent>
+                                                <Typography variant="h5">{anime.displayName}</Typography>
+                                            </CardContent>
+                                        </CardActionArea>
+                                    </Link>
+                                </Card>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </div>
+        </>
     );
 }
 
